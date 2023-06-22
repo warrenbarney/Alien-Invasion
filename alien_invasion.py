@@ -2,6 +2,7 @@ import sys
 
 import pygame
 
+from ship import Ship
 from settings import Settings
 
 
@@ -13,7 +14,6 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-        from ship import Ship
 
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height)
@@ -22,9 +22,6 @@ class AlienInvasion:
 
         self.ship = Ship(self)
 
-        # Set the background color.
-        self.bg_color = (230, 230, 230)
-
     def run_game(self):
         """Start the main loop for the game."""
         while True:
@@ -32,22 +29,17 @@ class AlienInvasion:
             self._update_screen()
             self.clock.tick(60)
 
-    def _update_screen(self):
-        """updating images on the screen, and flip to the new screen."""
-        self.screen.fill(self.settings.bg_color)
-        self.ship.blitme()
-
-        pygame.display.flip()
-
     def _check_events(self):
         """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    # Move the ship to the right.
-                    self.ship.rect.x += 1
+
+    def _update_screen(self):
+        """updating images on the screen, and flip to the new screen."""
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        pygame.display.flip()
 
 
 if __name__ == "__main__":
